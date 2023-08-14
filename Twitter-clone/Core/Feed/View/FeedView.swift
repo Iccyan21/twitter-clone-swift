@@ -9,14 +9,16 @@ import SwiftUI
 
 struct FeedView: View {
     @State private var showNewTweetView = false
+    @ObservedObject var viewModel = FeedViewModel()
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing){
             ScrollView{
                 LazyVStack{
                     
                     //　一つのツイートを呼び出しForぶんで回す
-                    ForEach(0 ... 20, id: \.self){ _ in
-                        TeetFeedView()
+                    ForEach(viewModel.tweets){ tweet in
+                        TweetRowView(tweet: tweet)
                             .padding()
                     }
                 }
@@ -38,6 +40,7 @@ struct FeedView: View {
                 NewTweetView()
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
     }
 }
 
